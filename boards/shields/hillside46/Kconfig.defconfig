@@ -1,0 +1,13 @@
+if SHIELD_HILLSIDE46_LEFT
+
+config ZMK_SPLIT_BLE_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_HILLSIDE46_LEFT || SHIELD_HILLSIDE46_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif
