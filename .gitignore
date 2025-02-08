@@ -1,5 +1,7 @@
-/.west
-/modules
-/zephyr
-/zmk
-/build
+.build
+.direnv
+.west
+modules
+firmware
+zephyr
+zmk

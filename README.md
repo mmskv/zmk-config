@@ -5,4 +5,6 @@ todo:
 
 ## flashing
 
-    nix run .#flash
+    just init
+    just build
+    just flash

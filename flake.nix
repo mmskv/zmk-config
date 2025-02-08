@@ -1,41 +1,55 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    zmk-nix = {
-      url = "github:lilyinstarlight/zmk-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # This pins requirements.txt provided by zephyr-nix.pythonEnv.
+    zephyr.url = "github:zmkfirmware/zephyr/v3.5.0+zmk-fixes";
+    zephyr.flake = false;
+
+    # Zephyr sdk and toolchain.
+    zephyr-nix.url = "github:urob/zephyr-nix";
+    zephyr-nix.inputs.zephyr.follows = "zephyr";
+    zephyr-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
-    self,
     nixpkgs,
-    zmk-nix,
-  }: let
-  in {
-    packages.x86_64-linux = rec {
-      default = firmware;
+    zephyr-nix,
+    ...
+  }: {
+    devShells.x86_64-linux = (
+      let
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        zephyr = zephyr-nix.packages.x86_64-linux;
+      in {
+        default = pkgs.mkShellNoCC {
+          packages = [
+            zephyr.pythonEnv
+            (zephyr.sdk-0_16.override {targets = ["arm-zephyr-eabi"];})
 
-      firmware = zmk-nix.legacyPackages.x86_64-linux.buildSplitKeyboard {
-        name = "firmware";
+            pkgs.cmake
+            pkgs.dtc
+            pkgs.ninja
 
-        src = nixpkgs.lib.sourceFilesBySuffices self [".board" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".json" ".keymap" ".overlay" ".shield" ".yml" "_defconfig"];
+            pkgs.just
+            pkgs.yq
 
-        board = "nice_nano_v2";
-        shield = "hillside46_%PART%";
-        #shield = "settings_reset";
+            pkgs.gawk
+            pkgs.unixtools.column
+            pkgs.coreutils
+            pkgs.pv
+            pkgs.diffutils
+            pkgs.findutils
+            pkgs.gnugrep
+            pkgs.gnused
+          ];
 
-        zephyrDepsHash = "sha256-VlNiXOv+PIk47gFxnpWM0tJQ/Kqb6NW0L6hgCFonCts=";
-
-        meta = {
-          description = "ZMK firmware";
-          license = nixpkgs.lib.licenses.mit;
-          platforms = nixpkgs.lib.platforms.all;
+          shellHook = ''
+            export ZMK_BUILD_DIR=$(pwd)/.build;
+            export ZMK_SRC_DIR=$(pwd)/zmk/app;
+          '';
         };
-      };
-
-      flash = zmk-nix.packages.x86_64-linux.flash.override {inherit firmware;};
-    };
+      }
+    );
   };
 }
