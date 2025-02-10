@@ -1,0 +1,56 @@
+/*                                      46 KEY MATRIX / LAYOUT MAPPING
+ ╭─────────────────────────╮               ╭─────────────────────────╮
+ │ LT5 LT4 LT3 LT2 LT1 LT0 │               │ RT0 RT1 RT2 RT3 RT4 RT5 │
+ │ LM5 LM4 LM3 LM2 LM1 LM0 ╰──╮         ╭──╯ RM0 RM1 RM2 RM3 RM4 RM5 │
+ │ LB5 LB4 LB3 LB2 LB1 LB0 LH4╰────┬────╯RH4 RB0 RB1 RB2 RB3 RB4 RB5 │
+ ╰───────────────╮ LH3 LH2 LH1 LH0 │ RH0 RH1 RH2 RH3 ╭───────────────╯
+                 ╰─────────────────┴─────────────────╯
+*/
+
+#include "hillside46_key_labels.h"
+#include "helpers.h"
+
+#define COMBO_TERM_FAST 18
+#define COMBO_TERM_SLOW 30
+
+#define COMBO_IDLE_FAST 150
+#define COMBO_IDLE_SLOW 50
+
+#define DEF 0
+#define NUM 1
+#define SYM 2
+#define ADJ 3
+
+
+ZMK_MOD_MORPH(lpar_lt, mods = <(MOD_LSFT)>; bindings = <&kp LPAR>, <&kp LT>;)
+ZMK_MOD_MORPH(rpar_gt, mods = <(MOD_LSFT)>; bindings = <&kp RPAR>, <&kp GT>;)
+
+ZMK_COMBO(lpar,  &lpar_lt,     RM1 RM2,     DEF NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(rpar,  &rpar_gt,     RM2 RM3,     DEF NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+ZMK_COMBO(lbkt,  &kp LBKT,     RB1 RB2,     DEF NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(rbkt,  &kp RBKT,     RB2 RB3,     DEF NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(bslh,  &kp BSLH,     RB3 RB4,     DEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+ZMK_COMBO(sqt,   &kp SQT,      RM3 RM4,     DEF NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+// cyrillic х and ъ
+ZMK_COMBO(cyrx,  &kp LBKT,     RT3 RT4,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(cyrb,  &kp RBKT,     RT4 RT5,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+// left hand
+
+ZMK_COMBO(hash,   &kp HASH,      LM4 LM3,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(equal,  &kp EQUAL,     LM3 LM2,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(grave,  &kp GRAVE,     LM2 LM1,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+ZMK_COMBO(minus,  &kp MINUS,     LB2 LB1,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+ZMK_COMBO(star,   &kp ASTRK,     LT3 LT2,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(caret,  &kp CARET,     LT2 LT1,     DEF NUM , COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+ZMK_COMBO(amps,   &kp AMPS,      LT1 LM1,     DEF NUM , COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+ZMK_COMBO(dollar, &kp DOLLAR,    LT2 LM2,     DEF NUM , COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+
+ZMK_COMBO(at,     &kp AT,        LM1 LB1,     DEF NUM , COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
+ZMK_COMBO(percent,&kp PERCENT,   LM2 LB2,     DEF NUM , COMBO_TERM_SLOW, COMBO_IDLE_SLOW)

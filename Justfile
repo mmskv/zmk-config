@@ -19,10 +19,10 @@ _build shield:
 build: (_build "hillside46_left") (_build "hillside46_right")
     @echo "Both sides built successfully"
 
-_flash side:
+_flash shield:
     #!/usr/bin/env bash
     set -euo pipefail
-    echo -n "Waiting for {{ side }}. Double tap reset button to flash."
+    echo -n "Waiting for {{ shield }}. Double tap reset button to flash."
     while ! device=$(lsblk -Sno path,model | grep -F 'nRF UF2' | cut -d' ' -f1); do
         echo -n "."
         sleep 1
@@ -31,8 +31,7 @@ _flash side:
     tmp_mount=$(mktemp -d)
     sudo mount -o uid=1000,gid=1000 "$device" "$tmp_mount"
 
-    size=$(stat -f %z "{{ out / side }}.uf2")
-    pv -s $size "{{ out / side }}.uf2" > "$tmp_mount/{{ side }}.uf2"
+    cp "{{ out / shield }}.uf2" "$tmp_mount/"
 
     sudo umount "$tmp_mount"
     rm -rf "$tmp_mount"
@@ -43,7 +42,7 @@ _flash side:
         sleep 1
     done
     echo "done"
-    echo "Successfully flashed {{ side }}"
+    echo "Successfully flashed {{ shield }}"
 
 flash: (_flash "hillside46_left") (_flash "hillside46_right")
     @echo "Both sides flashed successfully"
