@@ -1,10 +1,11 @@
 # zmk config for hillside46
 
 todo:
-- [ ] combos for symbols https://github.com/urob/zmk-config
+
+- [x] combos for symbols <https://github.com/urob/zmk-config>
+- [ ] try out homerow mods <https://github.com/urob/zmk-config>
 
 ## flashing
 
     just init
-    just build
-    just flash
+    just build flash
