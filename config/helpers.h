@@ -5,6 +5,7 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 
 #define ZMK_BEHAVIOR_CORE_mod_morph       compatible = "zmk,behavior-mod-morph";       #binding-cells = <0>
+#define ZMK_BEHAVIOR_CORE_hold_tap        compatible = "zmk,behavior-hold-tap";        #binding-cells = <2>
 
 #define ZMK_BEHAVIOR(name, type, ...) \
     / { \
@@ -17,6 +18,7 @@
     };
 
 #define ZMK_MOD_MORPH(name, ...) ZMK_BEHAVIOR(name, mod_morph, __VA_ARGS__)
+#define ZMK_HOLD_TAP(name, ...) ZMK_BEHAVIOR(name, hold_tap, __VA_ARGS__)
 
 
 #define ALL 0xff

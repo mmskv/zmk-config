@@ -22,7 +22,8 @@
 #define XXX &none
 #define ___ &trans
 
-#define SMART_NUM &num_word NUM
+ZMK_HOLD_TAP(smart_num, bindings = <&mo>, <&num_word>; flavor = "hold-preferred"; tapping-term-ms = <200>; compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>;)
+#define SMART_NUM &smart_num NUM NUM
 
 &num_word {
   continue-list = <BSPC DEL DOT COMMA PLUS MINUS STAR FSLH EQUAL LGUI RGUI>;
@@ -31,8 +32,6 @@
 &sk {
     quick-release;
 };
-
-ZMK_MOD_MORPH(qexcl, mods = <(MOD_LSFT)>; bindings = <&kp QMARK>, <&kp EXCL>;)
 
 / {
         keymap {
@@ -45,7 +44,7 @@ ZMK_MOD_MORPH(qexcl, mods = <(MOD_LSFT)>; bindings = <&kp QMARK>, <&kp EXCL>;)
 //├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────┤                                                                ├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────┤
     &kp  ESC       &kp  A         &kp  S         &kp  D         &kp  F         &kp  G                                                                          &kp  H         &kp  J         &kp  K         &kp  L         &kp  SEMI      &kp  ENTER
 //├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────╮                                  ╭──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼──────────────┤
-    &kp  LCTRL     &kp  Z         &kp  X         &kp  C         &kp  V         &kp  B         &kp  LALT                                         &caps_word     &kp  N         &kp  M         &kp  COMMA     &kp  DOT       &kp  SLASH     &qexcl
+    &kp  LCTRL     &kp  Z         &kp  X         &kp  C         &kp  V         &kp  B         &kp  LALT                                         &caps_word     &kp  N         &kp  M         &kp  COMMA     &kp  DOT       &kp  SLASH     &kp  SEMI
 //╰──────────────┴──────────────┴──────────────┴──────────────┼──────────────┼──────────────┼──────────────┼──────────────╮    ╭──────────────┼──────────────┼──────────────┼──────────────┼──────────────┴──────────────┴──────────────┴──────────────╯
                                                                 &kp  LGUI      &kp  TAB       &sk  LSHIFT    &mo  SYM            SMART_NUM      &kp  SPACE     &kp  TAB       &kp  RGUI
 //                                                            ╰──────────────┴──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────┴──────────────╯
